@@ -6,10 +6,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -28,6 +30,7 @@ public class Main extends Application {
     private Region createContent() {
         BorderPane results = new BorderPane();
         results.setTop(createTop());
+        results.setCenter(createCenter());
         results.setBottom(createBottom());
         return results;
     }
@@ -38,6 +41,12 @@ public class Main extends Application {
         Label frequency = new Label("44100 Hz");
         Label trackProgress = new Label("0:03 / 4:57");
         HBox results = new HBox(20, fileType, bitrate, frequency, trackProgress);
+        return results;
+    }
+
+    private Node createCenter() {
+        TableView<?> table = new TableView<>();
+        VBox results = new VBox(table);
         return results;
     }
 
