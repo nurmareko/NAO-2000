@@ -3,7 +3,10 @@ package id.nurmareko;
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -22,6 +25,13 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    private Region createContent() {
+        BorderPane results = new BorderPane();
+        results.setTop(createTop());
+        results.setBottom(createBottom());
+        return results;
+    }
+
     private Node createBottom() {
         Label fileType = new Label("FLAC");
         Label bitrate = new Label("1058 kbps");
@@ -31,9 +41,25 @@ public class Main extends Application {
         return results;
     }
 
-    private Region createContent() {
-        BorderPane results = new BorderPane();
-        results.setBottom(createBottom());
+    private Node createTop () {
+        Button addFiles = new Button("Add Files");
+        Button stop = new Button("⏹");
+        Button play = new Button("▶");
+        Button pause = new Button("⏸");
+        Button prev = new Button("⏮");
+        Button next = new Button("⏭");
+        ToggleButton shuffle = new ToggleButton("Shuffle");
+
+        Region visualizer = new Region();
+        visualizer.setPrefHeight(80);
+        visualizer.setStyle("-fx-background-color: black;");
+
+        Slider progressBar = new Slider();
+
+        Slider volume = new Slider(0, 100, 50);
+
+        HBox controls = new HBox(10, addFiles, prev, play, pause, stop, next, shuffle);
+        HBox results = new HBox(10, controls, visualizer, progressBar, volume);
         return results;
     }
 }
