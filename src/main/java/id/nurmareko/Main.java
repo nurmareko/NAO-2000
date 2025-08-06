@@ -31,12 +31,38 @@ public class Main extends Application {
     private Region createContent() {
         BorderPane results = new BorderPane();
         results.setTop(createTop());
+        results.setCenter(createCenter());
         results.setBottom(createBottom());
         return results;
     }
 
     private Node createTop() {
         HBox results = new HBox(10, createControl(), createProgressBar(), createVolume());
+        return results;
+    }
+
+    private Node createCenter() {
+        TableView<Track> table = new TableView<>();
+        TableColumn<Track, String> artistCol = new TableColumn<>("Artist/Album");
+        artistCol.setCellValueFactory(data -> data.getValue().artistAlbumProperty());
+        TableColumn<Track, Number> trackNoCol = new TableColumn<>("Track #");
+        trackNoCol.setCellValueFactory(data -> data.getValue().trackNumberProperty());
+        TableColumn<Track, String> titleCol = new TableColumn<>("Title");
+        titleCol.setCellValueFactory(data -> data.getValue().titleProperty());
+        TableColumn<Track, String> durationCol = new TableColumn<>("Duration");
+        durationCol.setCellValueFactory(data -> data.getValue().durationProperty());
+        table.getColumns().addAll(artistCol, trackNoCol, titleCol, durationCol);
+
+        table.getItems().addAll(
+                new Track("Daft Punk / Discovery", 1, "One More Time", "5:20"),
+                new Track("Daft Punk / Discovery", 2, "Aerodynamic", "3:27"),
+                new Track("Daft Punk / Discovery", 3, "Digital Love", "4:58"),
+                new Track("Porter Robinson / Nurture", 1, "Look at the Sky", "4:45"),
+                new Track("Porter Robinson / Nurture", 2, "Musician", "4:11"),
+                new Track("Hiroyuki Sawano / OST", 12, "Vogel im Käfig", "6:23"),
+                new Track("RADWIMPS / Your Name.", 7, "Sparkle", "7:16"));
+
+        VBox results = new VBox(table);
         return results;
     }
 
