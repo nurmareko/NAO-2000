@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.BorderPane;
@@ -30,8 +31,12 @@ public class Main extends Application {
     private Region createContent() {
         BorderPane results = new BorderPane();
         results.setTop(createTop());
-        results.setCenter(createCenter());
         results.setBottom(createBottom());
+        return results;
+    }
+
+    private Node createTop() {
+        HBox results = new HBox(10, createControl(), createProgressBar(), createVolume());
         return results;
     }
 
@@ -44,13 +49,7 @@ public class Main extends Application {
         return results;
     }
 
-    private Node createCenter() {
-        TableView<?> table = new TableView<>();
-        VBox results = new VBox(table);
-        return results;
-    }
-
-    private Node createTop () {
+    private Node createControl() {
         Button addFiles = new Button("Add Files");
         Button stop = new Button("⏹");
         Button play = new Button("▶");
@@ -58,17 +57,15 @@ public class Main extends Application {
         Button prev = new Button("⏮");
         Button next = new Button("⏭");
         ToggleButton shuffle = new ToggleButton("Shuffle");
-
-        Region visualizer = new Region();
-        visualizer.setPrefHeight(80);
-        visualizer.setStyle("-fx-background-color: black;");
-
-        Slider progressBar = new Slider();
-
-        Slider volume = new Slider(0, 100, 50);
-
-        HBox controls = new HBox(10, addFiles, prev, play, pause, stop, next, shuffle);
-        HBox results = new HBox(10, controls, visualizer, progressBar, volume);
+        HBox results = new HBox(10, addFiles, prev, play, pause, stop, next, shuffle);
         return results;
+    }
+
+    private Node createProgressBar() {
+        return new Slider();
+    }
+
+    private Node createVolume() {
+        return new Slider(0, 100, 50);
     }
 }
